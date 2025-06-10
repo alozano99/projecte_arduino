@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fitxatges - Alumne</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+        th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .logout { text-align: right; }
+    </style>
+</head>
+<body>
+    <h1>Hola {{ user.nom_usuari }}, aquí tens els teus fitxatges:</h1>
+    <div class="logout">
+        <form action="/web/logout" method="get">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>UID</th>
+            <th>Data i hora</th>
+        </tr>
+        {% for f in fichajes %}
+        <tr>
+            <td>{{ f.id }}</td>
+            <td>{{ f.uid }}</td>
+            <td>{{ f.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

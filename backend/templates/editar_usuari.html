@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar usuari</title>
+</head>
+<body>
+    <h1>Editar usuari</h1>
+    <form method="post">
+        <label>Nom: <input type="text" name="nom" value="{{ usuari.nom }}"></label><br>
+        <label>UID: <input type="text" name="uid" value="{{ usuari.uid }}"></label><br>
+        <label>Rol:
+            <select name="rol">
+                <option value="alumne" {% if usuari.rol.value == "alumne" %}selected{% endif %}>Alumne</option>
+                <option value="professor" {% if usuari.rol.value == "professor" %}selected{% endif %}>Professor</option>
+                <option value="admin" {% if usuari.rol.value == "admin" %}selected{% endif %}>Administrador</option>
+            </select>
+        </label><br>
+        <label>Nova contrasenya (opcional): <input type="password" name="password"></label><br>
+        <button type="submit">Guardar</button>
+    </form>
+    <p><a href="/web/admin/usuaris">Tornar</a></p>
+</body>
+</html>

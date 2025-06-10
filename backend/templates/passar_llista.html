@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Passar llista</title>
+</head>
+<body>
+    <h1>Passar llista</h1>
+
+    {% if missatge %}
+        <p>{{ missatge }}</p>
+    {% else %}
+        <p><strong>Classe actual:</strong> {{ horari.dia_setmana }} - {{ horari.hora_inici }} a {{ horari.hora_fi }} - Aula {{ horari.aula }}</p>
+        <form method="post" action="/web/professor/passar_llista">
+            {% for alumne in alumnes %}
+                <label>
+                    <input type="checkbox" name="presents" value="{{ alumne.id }}">
+                    {{ alumne.nom }}
+                </label><br>
+            {% endfor %}
+            <br>
+            <button type="submit">Desar assistència</button>
+        </form>
+    {% endif %}
+    
+    <br><a href="/web/professor">← Tornar enrere</a>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registre de Fitxatges</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+        th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .logout { text-align: right; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Fitxatges registrats</h1>
+
+    {% if user %}
+    <div class="logout">
+        <form action="/web/logout" method="get">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Usuari o UID</th>
+            <th>Data i hora</th>
+        </tr>
+        {% for f in fichajes %}
+        <tr>
+            <td>{{ f.id }}</td>
+            <td>
+                {% if f.user %}
+                    {{ f.user.nom }}
+                {% else %}
+                    {{ f.uid }}
+                {% endif %}
+            </td>
+            <td>{{ f.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

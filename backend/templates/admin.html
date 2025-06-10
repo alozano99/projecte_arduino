@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zona Admin</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        h1 { margin-bottom: 1em; }
+        a.button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Benvingut/da, administrador/a!</h1>
+    
+    {% if user %}
+    <div style="text-align: right; margin-bottom: 10px;">
+        <form action="/web/logout" method="get">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <p><a href="/web/fichajes" class="button">🔍 Veure fitxatges</a></p>
+    <p><a href="/web/admin/usuaris" class="button">👥 Gestió d'usuaris</a></p>
+    <p><a href="/web/logout" class="button">🚪 Logout</a></p>
+</body>
+</html>

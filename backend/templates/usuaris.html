@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestió d'usuaris</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        form { margin-top: 2em; }
+        td form { display: inline; }
+    </style>
+</head>
+<body>
+    <h1>Gestió d'usuaris</h1>
+
+    <h2>Afegir nou usuari</h2>
+    <form method="post" action="/web/admin/usuaris/afegir">
+        <label>Nom: <input type="text" name="nom" required></label><br>
+        <label>UID (opcional): <input type="text" name="uid"></label><br>
+        <label>Contrasenya: <input type="password" name="password" required></label><br>
+        <label>Rol:
+            <select name="rol" required>
+                <option value="admin">Admin</option>
+                <option value="professor">Professor</option>
+                <option value="alumne">Alumne</option>
+            </select>
+        </label><br><br>
+        <button type="submit">Afegir usuari</button>
+    </form>
+
+    <h2>Llista d'usuaris</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>UID</th>
+            <th>Rol</th>
+            <th>Nova contrasenya</th>
+            <th>Accions</th>
+        </tr>
+        {% for usuari in usuaris %}
+        <tr>
+            <form method="post" action="/web/admin/usuaris/editar/{{ usuari.id }}">
+                <td>{{ usuari.id }}</td>
+                <td><input type="text" name="nom" value="{{ usuari.nom }}" required></td>
+                <td><input type="text" name="uid" value="{{ usuari.uid or '' }}"></td>
+                <td>
+                    <select name="rol">
+                        <option value="admin" {% if usuari.rol.value == 'admin' %}selected{% endif %}>Admin</option>
+                        <option value="professor" {% if usuari.rol.value == 'professor' %}selected{% endif %}>Professor</option>
+                        <option value="alumne" {% if usuari.rol.value == 'alumne' %}selected{% endif %}>Alumne</option>
+                    </select>
+                </td>
+                <td><input type="password" name="password" placeholder="Nova contrasenya (opcional)"></td>
+                <td>
+                    <button type="submit">💾 Guardar</button>
+            </form>
+            <form method="post" action="/web/admin/usuaris/eliminar/{{ usuari.id }}" style="display:inline;">
+                <button type="submit" onclick="return confirm('Segur que vols eliminar aquest usuari?')">🗑️ Eliminar</button>
+            </form>
+                </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

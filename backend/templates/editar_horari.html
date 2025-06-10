@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar horari</title>
+</head>
+<body>
+    <h1>Editar horari</h1>
+    <form method="post" action="/web/professor/horaris/editar/{{ horari.id }}">
+        <label>Dia de la setmana:
+            <select name="dia_setmana" required>
+                {% for dia in ["Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres"] %}
+                    <option value="{{ dia }}" {% if horari.dia_setmana == dia %}selected{% endif %}>{{ dia }}</option>
+                {% endfor %}
+            </select>
+        </label><br><br>
+        <label>Hora inici: <input type="time" name="hora_inici" value="{{ horari.hora_inici.strftime('%H:%M') }}" required></label><br><br>
+        <label>Hora fi: <input type="time" name="hora_fi" value="{{ horari.hora_fi.strftime('%H:%M') }}" required></label><br><br>
+        <label>Aula: <input type="text" name="aula" value="{{ horari.aula or '' }}"></label><br><br>
+        <button type="submit">Desar</button>
+    </form>
+    <br>
+    <a href="/web/professor/horaris">← Tornar als horaris</a>
+</body>
+</html>

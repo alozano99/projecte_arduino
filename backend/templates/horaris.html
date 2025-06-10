@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Horaris del professor</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        form, .btn-group { display: inline; margin: 0; padding: 0; }
+        .btn-group button, .btn-group a {
+            margin-right: 5px;
+            text-decoration: none;
+        }
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Els teus horaris</h1>
+
+    <table>
+        <tr>
+            <th>Dia</th>
+            <th>Hora inici</th>
+            <th>Hora fi</th>
+            <th>Aula</th>
+            <th>Accions</th>
+        </tr>
+        {% for h in horaris %}
+        <tr>
+            <td>{{ h.dia_setmana }}</td>
+            <td>{{ h.hora_inici }}</td>
+            <td>{{ h.hora_fi }}</td>
+            <td>{{ h.aula or "-" }}</td>
+            <td>
+                <div style="display: flex; gap: 5px;">
+                    <form method="get" action="/web/professor/horaris/editar/{{ h.id }}">
+                        <button type="submit">Editar</button>
+                    </form>
+                    <form method="post" action="/web/professor/horaris/eliminar/{{ h.id }}">
+                        <button type="submit" onclick="return confirm('Segur que vols eliminar-ho?')">Eliminar</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Afegir nou horari</h2>
+    <form method="post" action="/web/professor/horaris/afegir">
+        <label>Dia: 
+            <select name="dia_setmana" required>
+                <option value="Dilluns">Dilluns</option>
+                <option value="Dimarts">Dimarts</option>
+                <option value="Dimecres">Dimecres</option>
+                <option value="Dijous">Dijous</option>
+                <option value="Divendres">Divendres</option>
+            </select>
+        </label><br>
+        <label>Hora inici: <input type="time" name="hora_inici" required></label><br>
+        <label>Hora fi: <input type="time" name="hora_fi" required></label><br>
+        <label>Aula (opcional): <input type="text" name="aula"></label><br><br>
+        <button type="submit">Afegir</button>
+    </form>
+</body>
+</html>

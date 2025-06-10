@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fitxatges - Professor</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+        th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .logout { text-align: right; }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Benvingut/da Professor {{ user.nom_usuari }}</h1>
+
+    {% if missatge %}
+        <p style="color: green; font-weight: bold;">{{ missatge }}</p>
+    {% endif %}
+
+    <p>
+        <a href="/web/professor/passar_llista" class="button">📋 Passar llista</a>
+    </p>
+    <p>
+        <a href="/web/professor/horaris" class="button">📅 Gestionar horari</a>
+    </p>
+    <div class="logout">
+        <form action="/web/logout" method="get">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <h2>📲 Fichatges automàtics (RFID)</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>UID</th>
+            <th>Data i hora</th>
+            <th>Retard</th>
+        </tr>
+        {% for f in fichatges_rfid %}
+        <tr>
+            <td>{{ f.id }}</td>
+            <td>{{ f.user.nom if f.user else "Desconegut" }}</td>
+            <td>{{ f.uid }}</td>
+            <td>{{ f.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+                {% if f.retard %}
+                    ❌ Sí
+                {% else %}
+                    ✅ No
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>✍️ Assistència manual (Professor)</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Data i hora</th>
+            <th>Retard</th>
+        </tr>
+        {% for f in fichatges_manual %}
+        <tr>
+            <td>{{ f.id }}</td>
+            <td>{{ f.user.nom if f.user else "Desconegut" }}</td>
+            <td>{{ f.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+                {% if f.retard %}
+                    ❌ Sí
+                {% else %}
+                    ✅ No
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

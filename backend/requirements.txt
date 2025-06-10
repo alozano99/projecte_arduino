@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+jinja2
+sqlalchemy
+passlib[bcrypt]
+python-multipart
+pydantic
+aiofiles
+paho-mqtt
+boto3
+itsdangerous
+python-jose
